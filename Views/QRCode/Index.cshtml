@@ -1,0 +1,257 @@
+﻿@model List<QrCode.Models.QRCodeModel>
+@{
+    ViewData["Title"] = "Generate QR Code";
+}
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(to right, #eef2ff, #faf5ff);
+    }
+
+    /* Title Section */
+    .page-title h1 {
+        font-size: 48px;
+        color: #2d2d85;
+        text-shadow: 0px 3px 8px rgba(0,0,0,0.08);
+    }
+
+    .page-title p {
+        letter-spacing: 1px;
+    }
+
+    /* Glass Card */
+    .glass-card {
+        background: rgba(255,255,255,0.65);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.4);
+        transition: 0.4s;
+    }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.1);
+        }
+
+    /* Animated Buttons */
+    .pulse-btn {
+        animation: pulse 2s infinite;
+    }
+
+    @@keyframes pulse {
+        0%
+
+    {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+    }
+
+    /* Table */
+    .table thead {
+        background: #2d2d85;
+        color: white;
+        border-radius: 10px;
+    }
+
+    .hover-row:hover {
+        background: #f0f0ff !important;
+        transition: 0.3s;
+    }
+
+    /* Thumbnail */
+    .qr-thumb {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        padding: 5px;
+        background: white;
+        transition: 0.3s;
+    }
+
+        .qr-thumb:hover {
+            transform: scale(1.15);
+        }
+
+    /* Animation */
+    .fade-in {
+        animation: fadeIn 1.2s ease-in-out;
+    }
+
+    .slide-up {
+        animation: slideUp 1.3s ease-in-out;
+    }
+
+    @@keyframes slideUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+</style>
+
+
+<!-- PAGE TITLE -->
+<div class="page-title text-center mb-5">
+    <h1 class="fw-bold animate__animated animate__fadeInDown">Generate Your QR Code</h1>
+    <p class="text-muted animate__animated animate__fadeInUp">Fast • Simple • Stylish • Customizable</p>
+</div>
+
+
+<!-- GLASS FORM -->
+<div class="glass-card shadow-lg p-4 mb-5 animate__animated animate__zoomIn">
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <form method="post" asp-action="Generate" enctype="multipart/form-data">
+        <div class="row">
+
+            <div class="col-md-8 mb-3">
+                <label class="fw-semibold">Enter Content</label>
+                <input type="text" name="content"
+                       class="form-control form-control-lg"
+                       placeholder="Paste URL or text..."
+                       required />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="fw-semibold">QR Type</label>
+                <select name="type" class="form-select">
+                    <option value="Text">Text</option>
+                    <option value="URL">URL</option>
+                    <option value="Contact">Contact</option>
+                    <option value="Payment">Payment</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label>Foreground</label>
+                <input type="color" name="foreColor" class="form-control form-control-color" value="#000000" />
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label>Background</label>
+                <input type="color" name="backColor" class="form-control form-control-color" value="#ffffff" />
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label>Style</label>
+                <select name="style" class="form-select">
+                    <option value="Square">Square</option>
+                    <option value="Dot">Dot</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label>Format</label>
+                <select name="format" class="form-select">
+                    <option value="png">PNG</option>
+                    <option value="jpg">JPG</option>
+                    <option value="svg">SVG</option>
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Upload Logo (optional)</label>
+                <input type="file" name="logo" accept="image/*" class="form-control" />
+            </div>
+
+            <div class="col-md-6 mb-3 align-self-end">
+                <button class="btn btn-primary btn-lg w-100 pulse-btn">
+                    🚀 Generate QR Code
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+
+
+<!-- RECENT QR LIST -->
+<h3 class="fw-bold mb-3 animate__animated animate__fadeInUp">Recently Generated</h3>
+
+<div class="table-responsive">
+    <table class="table table-hover rounded-4 overflow-hidden shadow-sm animate__animated animate__fadeIn">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Content</th>
+                <th>Type</th>
+                <th>Image</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr class="hover-row">
+                        <td><span class="badge bg-secondary">@item.Id</span></td>
+
+                        <td style="max-width:250px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                            @item.Content
+                        </td>
+
+                        <td>
+                            <span class="badge bg-primary">@item.ContentType</span>
+                        </td>
+
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.FileName))
+                            {
+                                <img src="~/images/qrcodes/@item.FileName" class="qr-thumb" />
+                            }
+                        </td>
+
+                        <td>@item.CreatedAt.ToString("dd-MM-yyyy hh:mm tt")</td>
+
+                        <td>
+                            <a asp-action="ViewImage" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Open</a>
+                            <a asp-action="Download" asp-route-id="@item.Id" asp-route-format="png" class="btn btn-sm btn-success">PNG</a>
+                            <a asp-action="Download" asp-route-id="@item.Id" asp-route-format="jpg" class="btn btn-sm btn-warning">JPG</a>
+                            <a asp-action="Download" asp-route-id="@item.Id" asp-route-format="svg" class="btn btn-sm btn-secondary">SVG</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="6" class="text-center p-4">No QR codes generated yet.</td></tr>
+            }
+        </tbody>
+    </table>
+</div>

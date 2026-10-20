@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Generate QR";
+}
+
+<style>
+    body {
+        background: #f8faff;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .container {
+        width: 450px;
+        margin: 50px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 14px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #2d2d85;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: 600;
+        color: #333;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        border: 1px solid #ccc;
+        padding: 12px;
+        border-radius: 6px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+
+    .btn-generate {
+        width: 100%;
+        padding: 14px;
+        background: #2d2d85;
+        color: white;
+        border: none;
+        font-size: 18px;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+        .btn-generate:hover {
+            background: #1f1f6b;
+            transform: scale(1.03);
+            cursor: pointer;
+        }
+
+    .result {
+        margin-top: 25px;
+        text-align: center;
+    }
+</style>
+
+<div class="container">
+    <h2>Generate QR Code</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        <label>Enter Text / URL</label>
+        <input type="text" name="Content" required placeholder="https://your-link.com">
+
+        <button class="btn-generate">Generate</button>
+    </form>
+
+    @if (ViewBag.QRCode != null)
+    {
+        <div class="result">
+            <h4>Your QR Code:</h4>
+            <img src="@ViewBag.QRCode" width="180" />
+        </div>
+    }
+</div>

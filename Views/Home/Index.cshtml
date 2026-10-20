@@ -1,0 +1,229 @@
+﻿@{
+    ViewData["Title"] = "QuickQR - Home";
+}
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(to right, #eef2ff, #fef9ff);
+        scroll-behavior: smooth;
+    }
+
+    .hero {
+        padding: 100px 20px;
+        text-align: center;
+        animation: fadeIn 1.4s ease-in-out;
+    }
+
+        .hero h1 {
+            font-size: 50px;
+            font-weight: 700;
+            color: #2d2d85;
+            animation: slideDown 1.3s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #333;
+            margin-top: 10px;
+            animation: fadeIn 1.6s ease-in-out;
+        }
+
+    .action-btn {
+        padding: 14px 28px;
+        background: #4338ca;
+        color: white;
+        font-size: 18px;
+        border-radius: 8px;
+        border: none;
+        margin-top: 20px;
+        transition: 0.3s;
+    }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+            background: #3730a3;
+            cursor: pointer;
+        }
+
+    /* Info Box */
+    .info {
+        margin-top: 70px;
+        padding: 40px;
+        background: white;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 2s ease-in-out;
+    }
+
+        .info h2 {
+            color: #2d2d85;
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .info p {
+            font-size: 18px;
+            color: #444;
+            line-height: 1.7;
+        }
+
+    /* Features Section */
+    .features {
+        margin-top: 70px;
+        padding: 40px;
+        text-align: center;
+    }
+
+        .features h2 {
+            font-size: 34px;
+            color: #2d2d85;
+            margin-bottom: 20px;
+        }
+
+    .feature-box {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+    }
+
+    .feature {
+        width: 280px;
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: 0.3s;
+    }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .feature i {
+            font-size: 40px;
+            color: #4338ca;
+            margin-bottom: 12px;
+        }
+
+    /* How it works */
+    .steps {
+        margin-top: 70px;
+        padding: 40px;
+        text-align: center;
+        background: #eef2ff;
+    }
+
+        .steps h2 {
+            font-size: 34px;
+            color: #2d2d85;
+        }
+
+    .step-list {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    .step {
+        background: white;
+        padding: 20px;
+        width: 260px;
+        border-radius: 12px;
+        box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+        font-size: 18px;
+        transition: .3s;
+    }
+
+        .step:hover {
+            transform: scale(1.05);
+        }
+
+    font-size: 16px;
+    }
+
+    /* Animations */
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @@keyframes slideDown {
+        from {
+            transform: translateY(-40px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+</style>
+
+<div class="hero">
+    <h1>Welcome to QuickQR</h1>
+    <p>Create professional QR Codes instantly — simple, fast, and free.</p>
+
+    <a href="/QRCode/Index">
+        <button class="action-btn">Generate QR Code</button>
+    </a>
+</div>
+
+<div class="info">
+    <h2>What is a QR Code?</h2>
+    <p>
+        A QR Code is a smart barcode that can be scanned using any smartphone.
+        It allows people to instantly open websites, contacts, business details,
+        payment links and more – with just one scan.
+    </p>
+</div>
+
+<div class="features">
+    <h2>Why Choose QuickQR?</h2>
+
+    <div class="feature-box">
+        <div class="feature">
+            <i class="fa fa-qrcode"></i>
+            <h4>Instant QR Generation</h4>
+            <p>Create any type of QR code in seconds.</p>
+        </div>
+
+        <div class="feature">
+            <i class="fa fa-paint-brush"></i>
+            <h4>Clean UI</h4>
+            <p>Beautiful, simple and modern interface.</p>
+        </div>
+
+        <div class="feature">
+            <i class="fa fa-save"></i>
+            <h4>Auto Save History</h4>
+            <p>Your past QR codes remain safe and accessible.</p>
+        </div>
+    </div>
+</div>
+
+<div class="steps">
+    <h2>How It Works</h2>
+
+    <div class="step-list">
+        <div class="step">1️⃣ Enter your text / link</div>
+        <div class="step">2️⃣ Click Generate</div>
+        <div class="step">3️⃣ Download your QR instantly</div>
+    </div>
+</div>
+
+

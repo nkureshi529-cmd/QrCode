@@ -1,0 +1,59 @@
+﻿@model List<QrCode.Models.QRCodeModel>
+
+@{
+    ViewData["Title"] = "QR History";
+}
+
+<div class="card shadow-sm p-4" style="border-radius: 12px;">
+    <h3 class="mb-3 fw-semibold text-primary">📜 QR Code History</h3>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            No QR Codes Generated Yet!
+        </div>
+    }
+    else
+    {
+        <table class="table table-hover align-middle">
+            <thead class="table-primary">
+                <tr>
+                    <th>#</th>
+                    <th>QR Text</th>
+                    <th>Generated On</th>
+                    <th>QR Image</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+
+                        <!-- FIX: Replace QRText with Content -->
+                        <td>@item.Content</td>
+
+                        <td>@item.CreatedAt.ToString("dd-MM-yyyy hh:mm tt")</td>
+
+                        <td>
+                            <img src="/images/qrcodes/@item.FileName"
+                                 alt="QR"
+                                 width="90"
+                                 class="rounded shadow-sm" />
+                        </td>
+
+                        <td>
+                            <a href="/images/qrcodes/@item.FileName"
+                               download
+                               class="btn btn-sm btn-primary">
+                                Download
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
